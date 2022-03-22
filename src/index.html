@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Provincetown</title>
+</head>
+<body>
+    <!-- <div style="
+        border-radius: 50%;
+        width: 256px;
+        height: 256px;
+        background-image: radial-gradient(circle, hsl(52, 100%, 90%), hsl(52, 100%, 40%));
+        box-shadow: 0 0 32px 32px hsla(52, 100%, 40%, 0.6);
+        margin: 64px;
+    "></div> -->
+		<script type="x-shader/x-vertex" id="vertexshader">
+
+			varying vec2 vUv;
+
+			void main() {
+
+				vUv = uv;
+
+				gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+
+			}
+
+		</script>
+
+		<script type="x-shader/x-fragment" id="fragmentshader">
+
+			uniform sampler2D baseTexture;
+			uniform sampler2D bloomTexture;
+
+			varying vec2 vUv;
+
+			void main() {
+
+				gl_FragColor = ( texture2D( baseTexture, vUv ) + vec4( 1.0 ) * texture2D( bloomTexture, vUv ) );
+
+			}
+
+		</script>
+    <canvas id="canvas"></canvas>
+</body>
+</html>
